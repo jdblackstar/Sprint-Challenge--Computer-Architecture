@@ -82,34 +82,77 @@ class CPU:
         """
         self.running = False
 
-    def PRN():
-        pass
+    def PRN(self, operand_a, operand_b):
+        """
+        Print the decimal integer stored in given register
+        """
+        print(self.reg[operand_a])
 
-    def CMP():
-        pass
+    def CMP(self, operand_a, operand_b):
+        """
+        Compare values in two registers
 
-    def JMP():
-        pass
+        - if A = B, set `E` flag to 1, otherwise set it to 0
+        - if A < B, set `L` flag to 1, otherwise set it to 0
+        - if A > B, set `G` flag to 1, otherwise set it to 0
+        """
+        reg_num1 = self.reg[operand_a]
+        reg_num2 = self.reg[operand_b]
+        self.alu("CMP", reg_num1, reg_num2)
 
-    def JE():
-        pass
+    def JMP(self, operand_a, operand_b):
+        """
+        Set PC to address in given register
+        """
+        self.pc = self.reg[operand_a]
 
-    def JNE():
-        pass
+    def JE(self, operand_a, operand_b):
+        """
+        If `Equal` flag is True, jump to address stored in register
+        """
+        if self.flag[E] == 0b00000001:
+            self.pc = self.reg[operand_a]
+        else:
+            self.pc += 2
+
+    def JNE(self, operand_a, operand_b):
+        """
+        If `E` flag is False or 0, jump to address stored in register
+        """
+        if self.flag[E] = 0b00000000:
+            self.pc = self.reg[operand_a]
+        else:
+            self.pc += 2
 
     # ORIGINAL FUNCTIONS FROM SPRINT
 
-    def MUL():
-        pass
+    def MUL(self, operand_a, operand_b):
+        self.alu("MUL", operand_a, operand_b)
 
-    def ADD():
-        pass
+    def ADD(self, operand_a, operand_b):
+        self.alu("ADD", operand_a, operand_b)
 
-    def PUSH():
-        pass
+    def PUSH(self, operand_a, operand_b):
+        # decrement stack
+        self.reg[7] -= 1
 
-    def POP():
-        pass
+        # grab val from reg
+        reg_num = self.ram[self.pc + 1]
+        value = self.reg[reg_num]
+
+        # store on top of stack
+        top_of_stack_addr = self.reg[SP]
+        self.ram[top_of_stack_addr] = value
+
+        self.pc += 2
+
+    def POP(self, operand_a, operand_b):
+        # increment stack
+        value = self.ram_read(self.reg[SP])
+        self.reg[operand_a] = value
+
+        self.reg[SP] += 1
+        self.pc += 2
 
     def CALL():
         pass
