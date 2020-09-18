@@ -70,8 +70,17 @@ class CPU:
         else:
             raise Exception("Unsupported ALU operation.")
 
-    def LDI():
-        pass
+    def LDI(self, operand_a, operand_b):
+        """
+        Set the value of a register equal to an integer
+        """
+        self.reg[operand_a] = operand_b
+
+    def HLT(self, operand_a, operand_b):
+        """
+        Halt CPU
+        """
+        self.running = False
 
     def PRN():
         pass
