@@ -169,16 +169,19 @@ class CPU:
 
     def run():
         """
-        
+
         """
         while self.running:
-            IR = self.ram_read(self.pc)
-            pc_flag = (IR & 0b00010000) >> 4
+            IR = self.ram_read(self.pc) # set current instruction
+            pc_flag = (IR & 0b00010000) >> 4 # bitwise operation to shift 4 to the right
 
+            # instantiate operands, same as before
             operand_a = self.ram[self.pc + 1]
             operand_b = self.ram[self.pc + 2]
 
+            # take the IR and find its corresponding function using
+            # the table created earlier, and run it on op_a and op_b
             self.table[IR](operand_a, operand_b)
             if pc_flag == 0:
-                move = int((IR & 0b11000000) >> 6)
-                self.pc += move + 1
+                move = int((IR & 0b11000000) >> 6) # bitwise operation to shift 6 right
+                self.pc += move + 1 # finalize movement
