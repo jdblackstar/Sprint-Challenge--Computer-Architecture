@@ -169,7 +169,7 @@ class CPU:
 
     def run():
         """
-
+        
         """
         while self.running:
             IR = self.ram_read(self.pc) # set current instruction
