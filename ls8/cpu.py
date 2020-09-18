@@ -154,11 +154,18 @@ class CPU:
         self.reg[SP] += 1
         self.pc += 2
 
-    def CALL():
-        pass
+    def CALL(self, operand_a, operand_b):
+        return_addr = operand_b
+        self.reg[SP] -= 1
+        stack_addr = self.reg[SP]
+        returned_addr = pc + 2
+        self.ram_write(stack_addr, returned_addr)
+        reg_num = self.ram_read(pc + 1)
+        self.pc = self.reg[reg_num]
 
-    def RET():
-        pass
+    def RET(self, operand_a, operand_b):
+        self.pc = self.ram_read(self.reg[SP])
+        self.reg[SP] += 1
 
     def run():
         pass
