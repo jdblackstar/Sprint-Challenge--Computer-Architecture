@@ -50,8 +50,25 @@ class CPU:
         """
         pass
 
-    def alu():
-        pass
+    def alu(self, op, operand_a, operand_b):
+        """
+        ALU operations.
+        """
+
+        if op == "ADD":
+            self.reg[operand_a] += self.reg[operand_b]
+        elif op == "MUL":
+            self.reg[operand_a] *= self.reg[operand_b]
+        elif op == "SUB":
+            self.reg[operand_a] -= self.reg[operand_b]
+        elif op == "CMP":
+            if operand_a == operand_b:
+                self.flag[E] = 0b00000001 # yes/true
+            else:
+                self.flag[E] = 0b00000000 # no/false
+        
+        else:
+            raise Exception("Unsupported ALU operation.")
 
     def LDI():
         pass
