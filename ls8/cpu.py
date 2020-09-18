@@ -168,4 +168,17 @@ class CPU:
         self.reg[SP] += 1
 
     def run():
-        pass
+        """
+        
+        """
+        while self.running:
+            IR = self.ram_read(self.pc)
+            pc_flag = (IR & 0b00010000) >> 4
+
+            operand_a = self.ram[self.pc + 1]
+            operand_b = self.ram[self.pc + 2]
+
+            self.table[IR](operand_a, operand_b)
+            if pc_flag == 0:
+                move = int((IR & 0b11000000) >> 6)
+                self.pc += move + 1
